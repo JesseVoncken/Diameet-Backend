@@ -12,10 +12,10 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_random_string';
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/diameet';
 
-// --- UPDATED CORS SETTINGS ---
+// --- FIXED CORS SETTINGS ---
 const allowedOrigins = [
-  "http://localhost:3000", // Local React development
-  "https://jessevoncken.github.io/Diameet-Frontend/" // Your future GitHub Pages URL
+  "http://localhost:3000", 
+  "https://jessevoncken.github.io" // REMOVED the sub-path and trailing slash
 ];
 
 const io = require('socket.io')(http, {

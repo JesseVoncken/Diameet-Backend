@@ -10,17 +10,28 @@ const jwt = require('jsonwebtoken');
 // --- 1. CONFIGURATION ---
 const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_random_string'; 
 const PORT = process.env.PORT || 4000;
-// Use the Atlas URI from .env, fallback to local if not found
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/diameet';
+
+// --- UPDATED CORS SETTINGS ---
+const allowedOrigins = [
+  "http://localhost:3000", // Local React development
+  "https://jessevoncken.github.io/Diameet-Frontend/" // Your future GitHub Pages URL
+];
 
 const io = require('socket.io')(http, {
   cors: {
-    origin: ["http://localhost:3000", "https://your-github-username.github.io"], // Add your GH Pages URL later
-    methods: ["GET", "POST"]
+    origin: allowedOrigins, 
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
+// Increased limits for Base64 image strings
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static('public'));
